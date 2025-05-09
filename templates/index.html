@@ -1,0 +1,24 @@
+{{ define "title" }}Home{{ end }}
+
+{{ define "content" }}
+<main>
+	<img src="/static/main_logo.png">
+	<h1>Welcome to HitList!</h1>
+	<p>Log in to Spotify to hear the Hit of the Day!</p>
+	<button onclick="redirect()">Log in</button>
+</main>
+{{ end }}
+
+{{ define "scripts" }}
+<script>
+		function redirect() {
+			let redirectURL;
+			{{ if .TokenCookie }}
+			redirectURL = "http://localhost:8080/hit-of-the-day";
+			{{ else }}
+			redirectURL = "{{.RedirectURL}}";
+			{{ end }}
+			window.location.href = redirectURL;
+		}
+</script>
+{{ end }}

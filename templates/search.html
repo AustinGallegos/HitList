@@ -1,0 +1,79 @@
+{{ define "title" }}Search{{ end }}
+
+{{ define "content" }}
+<main>
+	{{ if .IsPremium }}
+		<h1 class="hits-text">Search Results</h1>
+
+		{{range .Tracks}}
+			<div>
+				<img src="{{.ImageLink}}" alt="Album cover" class="cover-img" />
+				<h1><strong>{{.TrackName}} – {{.ArtistName}}</strong></h1><br>
+				<button class="submit-hit" 
+						data-track-id="{{.TrackID}}"
+						data-track-name="{{.TrackName}}"
+						data-artist="{{.ArtistName}}"
+						data-image="{{.ImageLink}}">
+					Submit Hit
+				</button>
+			</div>
+		{{end}}
+
+		<button onclick="redirectSubmitHit()">Search Another</button>
+		
+	{{ else }}
+	<h1>Upgrade to Premium to Search Tracks<span>🔒</span></h1>
+	<p>Some features require a Premium subscription 🎵</p>
+	{{ end }}
+</main>
+{{ end }}
+
+{{ define "scripts" }}
+<script>
+	function redirectSubmitHit() {
+		const redirectURL = "http://localhost:8080/submit-a-hit";
+		window.location.href = redirectURL;
+	}
+</script>	
+
+<script>
+	document.querySelectorAll('.submit-hit').forEach(button => {
+		button.addEventListener('click', () => {
+			const trackID = button.dataset.trackId;
+			const trackName = button.dataset.trackName;
+			const artist = button.dataset.artist;
+			const image = button.dataset.image;
+	
+			const requestData = {
+				trackID: trackID,
+				trackName: trackName,
+				artist: artist,
+				image: image
+			};
+	
+			fetch('http://localhost:8080/success', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(requestData)
+			})
+			.then(response => {
+				if (response.ok) {
+					response.text().then(html => {
+						document.open();
+						document.write(html);
+						document.close();
+					});
+				} else {
+					alert('Failed to submit hit');
+				}
+			})
+			.catch(error => {
+				console.error('Error:', error);
+				alert('An error occurred while submitting the hit.');
+			});
+		});
+	});
+</script>
+{{ end }}

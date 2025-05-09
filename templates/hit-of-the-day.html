@@ -1,0 +1,27 @@
+{{ define "title" }}Hit of the Day{{ end }}
+
+{{ define "content" }}
+<main>
+	{{ if .IsPremium }}
+		<h1>Hit of the Day:</h1>
+		<img src="{{(index .Tracks 0).ImageLink}}" alt="Album Cover" class="cover-img" />
+		<h1><strong>{{(index .Tracks 0).TrackName}} – {{(index .Tracks 0).ArtistName}}
+		</strong></h1>
+		<h1><strong>Playing on your {{.DeviceName}} 🎵</strong></h1>
+		<button onclick="redirectToHotW()">Submit a Hit</button>
+		
+	{{ else }}
+	<h1>Upgrade to Premium to enjoy the Hit of the Day<span>🔒</span></h1>
+	<p>Some features require a Premium subscription 🎵</p>
+	{{ end }}
+</main>
+{{ end }}
+
+{{ define "scripts" }}
+<script>
+	function redirectToHotW() {
+		const redirectURL = "http://localhost:8080/submit-a-hit";
+		window.location.href = redirectURL;
+	}
+</script>	
+{{ end }}

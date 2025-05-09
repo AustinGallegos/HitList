@@ -1,0 +1,24 @@
+{{ define "title" }}Submit a Hit{{ end }}
+
+{{ define "content" }}
+<main>
+    <img src="/static/main_logo.png">
+    <h1>Submit a Hit!</h1>
+
+    <form id="searchContainer" onsubmit="handleSearch(event)">
+        <input type="text" id="searchInput" placeholder="Search for a hit...">
+        <button type="submit">Search</button>
+    </form>
+</main>
+{{ end }}
+
+{{ define "scripts" }}
+<script>
+    function handleSearch() {
+        event.preventDefault();
+        const inputValue = document.getElementById("searchInput").value;
+        const redirectURL = `http://localhost:8080/search?query=${encodeURIComponent(inputValue)}`;
+        window.location.href = redirectURL;
+    }
+</script>
+{{ end }}

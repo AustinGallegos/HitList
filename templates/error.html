@@ -1,0 +1,10 @@
+{{ define "title" }}Error{{ end }}
+
+{{ define "content" }}
+<main>
+	<img src="/static/main_logo.png">
+	<h1>Error {{.Code}} 😔</h1>
+	<p>{{.Message}}</p>
+	<button onclick="home()">Go Home</button>
+</main>
+{{ end }}

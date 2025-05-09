@@ -1,0 +1,23 @@
+{{ define "title" }}Success{{ end }}
+
+{{ define "content" }}
+<main>
+	<img src="/static/main_logo.png">
+	<h1>Success!</h1>
+
+	<img src="{{.ImageLink}}" alt="Album Cover" class="cover-img" />
+	<h1><strong>{{.TrackName}} – {{.ArtistName}}</strong></h1>
+	<h1><strong>Submitted for Hit of the Day! 🎵</strong></h1>
+
+	<button onclick="redirectToSubmitHit()">Submit Another</button>
+</main>
+{{ end }}
+
+{{ define "scripts" }}
+<script>
+	function redirectToSubmitHit() {
+		const redirectURL = "http://localhost:8080/submit-a-hit";
+		window.location.href = redirectURL;
+	}
+</script>
+{{ end }}

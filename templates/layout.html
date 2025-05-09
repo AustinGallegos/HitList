@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ block "title" . }}HitList{{ end }}</title>
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+
+<body>
+    <div class="top-left">
+        <button onclick="home()">Home</button>
+    </div>
+    <div class="top-right">
+        <button onclick="logout()">Log Out</button>
+    </div>
+
+    {{ block "content" . }}{{ end }}
+
+    <footer>Built with the Spotify Web API · by Austin</footer>
+
+    {{ block "scripts" . }}{{ end }}
+
+    <script>
+		function home() {
+		const redirectURL = "http://localhost:8080/";
+		window.location.href = redirectURL;
+		}
+	</script>
+
+	<script>
+		function logout() {
+			fetch('/logout', {
+				method: 'POST',
+			}).then(() => {
+				window.location.href = '/';
+			});
+		}
+	</script>
+</body>
+</html>
