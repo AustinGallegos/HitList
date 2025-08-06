@@ -64,6 +64,7 @@
 						document.open();
 						document.write(html);
 						document.close();
+						history.pushState(null, '', '/success')
 					});
 				} else {
 					alert('Failed to submit hit');
